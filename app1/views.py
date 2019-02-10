@@ -1,7 +1,11 @@
 from django.shortcuts import render
 from app1.forms import it_sales_form
 from app1.models import Employee,Temp
+from simple_aes_cipher import AESCipher, generate_secret_key
 import random
+pass_phrase = "7GoodLuck7"
+secret_key = generate_secret_key(pass_phrase)
+cipher = AESCipher(secret_key)
 
 def index(request):
     name = "INDEX:"
@@ -17,89 +21,108 @@ def check(request):
 
 def register(request):
     if request.method == 'POST':
-        form = it_sales_form(request.POST)
         print()
-        print(form.is_valid())
         print(type(request.POST))
         print()
 
-        if form.is_valid():
-            emp_id = request.POST['emp_id']
-            name = request.POST['name']
-            password = request.POST['password']
-            email = request.POST['email']
-            dept = request.POST['dept']
-            ques_1_id = request.POST['ques_1_id']
-            ans_1 = request.POST['ans_1']
-            ques_2_id = request.POST['ques_2_id']
-            ans_2 = request.POST['ans_2']
-            gender = request.POST['gender']
-            phone = request.POST['phone']
-            repeat_password = request.POST['repeat_password']
-
-            print(emp_id,name,password,email,dept,ques_1_id,ans_1,ques_2_id,ans_2,gender,phone,repeat_password)
-            count = 0
-            message = ""
-
-            searchObject = Employee.objects.all()
-            flag = 1
-            for i in range(len(searchObject)):
-                lst = str(searchObject[i]).split(";")
-                print(lst[0],emp_id)
-                if lst[0] == emp_id:
-                    message = message + "Employee already exists.\n"
-                    flag = 0
-                    break
-            if flag == 1:
-                count = count + 1    
+        
+        emp_id = request.POST['emp_id']
+        name = request.POST['name']
+        password = request.POST['password']
+        email = request.POST['email']
+        dept = request.POST['dept']
+        ques_1_id = request.POST['ques_1_id']
+        ans_1 = request.POST['ans_1']
+        ques_2_id = request.POST['ques_2_id']
+        ans_2 = request.POST['ans_2']
+        gender = request.POST['gender']
+        phone = request.POST['phone']
+        repeat_password = request.POST['repeat_password']
+        print(emp_id,name,password,email,dept,ques_1_id,ans_1,ques_2_id,ans_2,gender,phone,repeat_password)
+        count = 0
+        message = ""
+        searchObject = Employee.objects.all()
+        flag = 1
+        for i in range(len(searchObject)):
+            lst = str(searchObject[i]).split(";")
+            print(lst[0],emp_id)
+            if lst[0] == emp_id:
+                message = message + "Employee already exists.\n"
+                flag = 0
+                break
+        if flag == 1:
+            count = count + 1    
+        
+        if password == repeat_password:
+            if len(password)>6:
+                flag1,flag2,flag3 = 0,0,0
+                for i in range(len(password)):
+                    ele = ord(password[i])
+                    if ele>96 and ele<123:
+                        flag1 = 1
+                    elif ele>47 and ele<58:
+                        flag2 = 1
+                    elif ele>64 and ele<91:
+                        flag3 = 1
+                if flag1 == 1 and flag2 == 1 and flag3 == 1:
+                    count = count + 1
+                else:
+                    message = message +"Re-enter the Password\n"
+        else:
+            message = message + "Passwords does not match\n"
+        
+        print(count)
+        if count == 2:
+            raw_text = password
+            encrypt_text = cipher.encrypt(raw_text)
+            Employee(emp_id = emp_id,
+            name = name,
+            password = encrypt_text,
+            email = email,
+            dept = dept,
+            ques_1_id = ques_1_id,
+            ans_1 = ans_1,
+            ques_2_id = ques_2_id,
+            ans_2 = ans_2,
+            gender = gender,
+            phone = phone).save()
             
-            if password == repeat_password:
-                if len(password)>6:
-                    flag1,flag2,flag3 = 0,0,0
-                    for i in range(len(password)):
-                        ele = ord(password[i])
-                        if ele>96 and ele<123:
-                            flag1 = 1
-                        elif ele>47 and ele<58:
-                            flag2 = 1
-                        elif ele>64 and ele<91:
-                            flag3 = 1
-
-                    if flag1 == 1 and flag2 == 1 and flag3 == 1:
-                        count = count + 1
-                    else:
-                        message = message +"Re-enter the Password\n"
-            else:
-                message = message + "Passwords does not match\n"
-            
-            print(count)
-            if count == 2:
-                Employee(emp_id = emp_id,
-                name = name,
-                password = password,
-                email = email,
-                dept = dept,
-                ques_1_id = ques_1_id,
-                ans_1 = ans_1,
-                ques_2_id = ques_2_id,
-                ans_2 = ans_2,
-                gender = gender,
-                phone = phone).save()
-                
-                message = message + "Account Successfully Created."
-            print(message)
-            context = {'message': message}  
-            return render(request,'app1/register.html',context)
+            message = message + "Account Successfully Created."
+        print(message)
+        context = {'message': message}  
+        return render(request,'app1/register.html',context)
 
     else:
-        message = "hi"
+        message = "Welcome To Registration Page"
         context = {"message":message}
         return render(request,'app1/register.html',context)
 
 
 
 def login(request):
-    return render(request,'app1/login.html')
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+
+        print(username,password)
+        message = ""
+
+        if len(Employee.objects.filter(emp_id=username)) == 0:
+            message = message + "No Matching Accounts Found"
+        else:
+            pass_hash = str(Employee.objects.filter(emp_id="TCH007")[0]).split(";")[4] 
+            decrypt_text = cipher.decrypt(pass_hash)
+            if password == decrypt_text:
+                message = message + "Welcome to the Home Page"
+            else:
+                message = message + "Wrong Password Entered"
+
+        print(message)
+        context = {"message":message}
+        return render(request,'app1/login.html',context)
+
+    else:
+        return render(request,'app1/login.html')
 
 def test(request):
     if request.method == 'POST':

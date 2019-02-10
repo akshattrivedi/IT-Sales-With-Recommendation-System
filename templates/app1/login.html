@@ -5,7 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
 body {font-family: Arial, Helvetica, sans-serif;
-    background-image: linear-gradient(#6A9113, #141517)}
+    background-image: linear-gradient(#6A9113, #141517);
+    background-size: 100%;
+}
 form {border: 3px solid #f1f1f1;
       margin: 50px;
       margin-left: 100px;
@@ -77,24 +79,26 @@ img.avatar {
 </head>
 <body>
 
-<form action="/action_page.php">
-  <center><h1><em>Login Form</em></h1></center>
+<form action="{% url 'login' %}" method="POST">
+    {% csrf_token %}
+  <center><h1><em>Employee Login Form</em></h1></center>
 
   <div class="imgcontainer">
-    <img src="img_avatar2.png" alt="Avatar" class="avatar">
+    <img src="./img_avatar2.png" alt="Avatar" class="avatar">
   </div>
 
   <div class="container">
-    <label for="uname"><b>Username</b></label>
-    <input type="text" placeholder="Enter Username" name="uname" required>
+    <label for="uname"><b>Employee ID</b></label>
+    <input type="text" placeholder="Enter ID" name="username" required>
 
     <label for="psw"><b>Password</b></label>
-    <input type="password" placeholder="Enter Password" name="psw" required>
+    <input type="password" placeholder="Enter Password" name="password" required>
     
     <label>
       <input type="checkbox" checked="checked" name="remember"> Remember me
     </label><br>    
     <button type="submit">Login</button>
+    <marquee><h3>{{message}}</h3></marquee> 
   </div>
 <div class="container">
     <p>Don't have an account? <a href="register.html">Sign up</a>.</p>
