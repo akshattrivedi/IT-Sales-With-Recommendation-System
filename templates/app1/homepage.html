@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+* {
+  box-sizing: border-box;
+
+}
+.header {
+
+  background: #555;
+  color: #f1f1f1;
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+#myInput {
+  background-image: url('searchicon.png');
+  background-position: 10px 12px;
+  background-size: 20px 20px;
+  background-repeat: no-repeat;
+  width: 100%;
+  font-size: 16px;
+  padding: 10px 20px 12px 40px;
+  border: 1px solid #ddd;
+  
+}
+
+#myUL {
+  list-style-type: none;
+  padding: 0;
+  margin: 5px 80px 5px 80px;
+
+}
+
+#myUL li{
+  border: 1px solid #ddd;
+  margin-top: -1px; /* Prevent double borders */
+  background-color: #f6f6f6;
+  padding: 12px 30px 20px 30px;
+  text-decoration: none;
+  font-size: 18px;
+  color: black;
+  display: block
+
+}
+.collapsible {
+  background-color: #777;
+  color: white;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  border: none;
+  text-align: center;
+  outline: none;
+  font-size: 15px;
+
+}
+
+.active, .collapsible:hover {
+  background-color: #555;
+}
+
+.content {
+  padding: 10px 18px;
+  display: none;
+  overflow: hidden;
+  background-color: #f1f1f1;
+}
+
+
+#myUL li:hover(.header) {
+  background-color: #eee;
+}
+ul{
+  padding: 5px 2px 2px 2px;
+}
+
+#main {
+  transition: margin-left .5s;
+ 
+}
+
+.sidenav {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #555;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+}
+
+.sidenav a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #f1f1f1;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidenav a:hover {
+  color: #818181;
+}
+
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+
+</style>
+</head>
+<body>
+
+  <div id="mySidenav" class="sidenav">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    <a href="#">Home</a>
+    <a href="#">Accounts</a>
+    <a href="#">News</a>
+    <a href="#">LogOut</a>
+  </div>
+
+<div id="main">
+<div class="header" id="myHeader">
+  <h2><center><span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span>  TechCiti Home</center></h2>
+</div>
+<h2 style="margin-top: 90px"><center> Search For a Company</center></h2>
+<input type="text" id="myInput" onkeyup="searchfunction()" placeholder="Search for names.." title="Type in a name">
+
+<ul id="myUL">
+  <li><a><button class="collapsible" name="iskanaam">Company 1</button><div class="content"><ul>Product 1</ul><ul>Product 2</ul></div></a></li>
+  <li><a><button class="collapsible">Company 2</button><div class="content"><ul>Product 1</ul></div></a></li>
+  <li><a><button class="collapsible">Company 3</button><div class="content"><ul>Product 1</ul></div></a></li>
+  <li><a><button class="collapsible">Company 4</button><div class="content"><ul>Product 1</ul></div></a></li>
+  <li><a><button class="collapsible">Open Collapsible</button><div class="content"><ul>Product 1</ul></div></a></li>
+  <li><a><button class="collapsible">Open Collapsible</button><div class="content"><ul>Product 1</ul></div></a></li>
+  <li><a><button class="collapsible">Open Collapsible</button><div class="content"><ul>Product 1</ul></div></a></li>
+  <li><a><button class="collapsible">Open Collapsible</button><div class="content"><ul>Product 1</ul></div></a></li>
+  <li><a><button class="collapsible">Open Collapsible</button><div class="content"><ul>Product 1</ul></div></a></li>
+</ul>
+</div>
+<script>
+window.onscroll = function() {myFunction1()};
+
+function searchfunction() {
+    var input, filter, ul, li, a, i, txtValue;
+    input = document.getElementById("myInput");
+    filter = input.value.toUpperCase();
+    ul = document.getElementById("myUL");
+    li = ul.getElementsByTagName("li");
+    for (i = 0; i < li.length; i++) {
+        a = li[i].getElementsByTagName("a")[0];
+        txtValue = a.textContent || a.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            li[i].style.display = "";
+        } else {
+            li[i].style.display = "none";
+        }
+    }
+}
+var header = document.getElementById("myHeader");
+var sticky = header.offsetTop;
+
+function myFunction1() {
+  if (window.pageYOffset > sticky) {
+    header.classList.add("sticky");
+  } else {
+    header.classList.remove("sticky");
+  }
+}
+
+var coll = document.getElementsByClassName("collapsible");
+var i;
+
+for (i = 0; i < coll.length; i++) {
+  coll[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var content = this.nextElementSibling;
+    if (content.style.display === "block") {
+      content.style.display = "none";
+    } else {
+      content.style.display = "block";
+    }
+  });
+}
+
+function openNav() {
+  document.getElementById("mySidenav").style.width = "250px";
+  document.getElementById("main").style.marginLeft = "250px";
+}
+
+function closeNav() {
+  document.getElementById("mySidenav").style.width = "0";
+  document.getElementById("main").style.marginLeft = "0";
+}
+
+</script>
+
+</body>
+</html>
