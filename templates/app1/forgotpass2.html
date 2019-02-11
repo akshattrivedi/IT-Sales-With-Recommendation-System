@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Employee forgot password page 2</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background-image: linear-gradient(#4CAF50, #141517);
+}
+form {border: 3px solid #f1f1f1;
+      margin: 50px;
+      margin-left: 100px;
+      margin-right: 100px;
+      background: linear-gradient(#fff, #BCBCBC);
+      padding: 80px;
+    }
+
+* {
+  box-sizing: border-box;
+}
+
+/* Add padding to containers */
+.container {
+  padding: 16px;
+  background-color: white;
+}
+
+/* Full-width input fields */
+input[type=text], input[type=password],input[type=number],select {
+  width: 50%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  display: block;
+  border: none;
+  background: #f1f1f1;
+}
+
+input[type=text]:focus, input[type=password]:focus,input[type=number]:focus {
+  background-color: #ddd;
+  outline: none;
+}
+
+/* Overwrite default styles of hr */
+hr {
+  border: 1px solid #f1f1f1;
+  margin-bottom: 25px;
+}
+
+/* Set a style for the submit button */
+.forgotpass {
+  background-color: #4CAF50;
+  color: white;
+  padding: 16px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  opacity: 0.9;
+}
+
+.forgotpass:hover {
+  opacity: 1;
+}
+
+/* Add a blue text color to links */
+a {
+  color: dodgerblue;
+}
+
+/* Set a grey background color and center the text of the "sign in" section */
+.signin {
+  background-color: #f1f1f1;
+  text-align: center;
+}
+</style>
+</head>
+<body>
+
+<form action="/action_page.php" method="post">
+  <div class="container">
+    <h1>Employee Forgot Password</h1>
+    <p>Please fill in this form to Reset the Password.</p>
+    <hr>
+    <label for="email"><b>Email</b></label>
+    <input type="text" placeholder="Enter Email" name="email" required>
+    
+    <label for="ques1"><b>Security Question</b></label>
+    <select>
+      <option></option>
+      <option></option>
+    </select>
+    <input type="text" placeholder="Enter Answer" name="ques1" required>
+
+    <label for="psw"><b>New Password</b></label>
+    <input type="password" placeholder="Enter Password" name="psw" required>
+
+    <label for="psw-repeat"><b>Repeat New Password</b></label>
+    <input type="password" placeholder="Repeat Password" name="psw-repeat" required>
+    <hr>
+
+    <button type="submit" class="forgotpass">Save Changes</button>
+  </div>
+  
+  <div class="container signin">
+    <p>Return to Login? <a href="login.html">Click Here</a>.</p>
+  </div>
+</form>
+
+</body>
+</html>

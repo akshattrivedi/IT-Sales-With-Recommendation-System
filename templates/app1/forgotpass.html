@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Forgot Password</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+html,body{
+  height: 100%;
+  background: repeating-linear-gradient(#4CAF50,#141517);
+}
+form {
+      border: 3px solid #f1f1f1;
+      margin: 10px 150px 15px 150px;
+      background: linear-gradient(#fff, #BCBCBC);
+      padding: 30px;
+    }
+
+input[type=text], input[type=password] {
+  
+  width: 50%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 50%;
+}
+
+button:hover {
+  opacity: 0.8;
+}
+
+.imgcontainer {
+  text-align: center;
+  margin: 24px 0 12px 0;
+}
+button a{
+  text-decoration: none;
+  color: #fff;
+  font-weight: bold;
+}
+
+img.avatar {
+  width: 10%;
+  border-radius: 20%;
+}
+
+.container {
+  padding: 16px;
+  margin-left: 30%;
+}
+
+</style>
+</head>
+<body>
+<form action="/action_page.php">
+  <center><h1><em>Forgot Password</em></h1></center>
+
+  <div class="imgcontainer">
+    <img src="img_avatar2.png" alt="Avatar" class="avatar">
+  </div>
+
+  <div class="container">
+    <label for="eid"><b>Employee-Id</b></label>
+    <input type="text" placeholder="Employee Id" name="eid" required>
+
+    <button type="submit"><a href="forgotpass2.html"> Next ></a></button>
+  </div>
+<div class="container">
+    <p>Return to Login Page? <a href="login.html">Click Here</a>.</p>
+  </div>
+</form>
+
+</body>
+</html>
