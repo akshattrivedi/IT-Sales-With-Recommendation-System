@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from app1.forms import it_sales_form
-from app1.models import Employee,Temp
+from app1.models import Employee,Company,Products,Transactions,TCP,Temp
 from simple_aes_cipher import AESCipher, generate_secret_key
 import random
 pass_phrase = "7GoodLuck7"
