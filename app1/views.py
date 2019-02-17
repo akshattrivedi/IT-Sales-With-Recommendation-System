@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from app1.forms import it_sales_form
 from app1.models import Employee,Company,Products,Transactions,TCP,Temp
 from simple_aes_cipher import AESCipher, generate_secret_key
@@ -6,6 +6,7 @@ import random
 pass_phrase = "7GoodLuck7"
 secret_key = generate_secret_key(pass_phrase)
 cipher = AESCipher(secret_key)
+loginUser = "A"
 
 def index(request):
     name = "INDEX:"
@@ -100,6 +101,7 @@ def register(request):
 
 
 def login(request):
+    global loginFlag,loginUser
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
@@ -110,10 +112,14 @@ def login(request):
         if len(Employee.objects.filter(emp_id=username)) == 0:
             message = message + "No Matching Accounts Found"
         else:
-            pass_hash = str(Employee.objects.filter(emp_id="TCH007")[0]).split(";")[4] 
+            pass_hash = str(Employee.objects.filter(emp_id=username)[0]).split(";")[4] 
             decrypt_text = cipher.decrypt(pass_hash)
             if password == decrypt_text:
                 message = message + "Welcome to the Home Page"
+                loginFlag = True
+                loginUser = username
+                print(loginUser)
+                return redirect('home')
             else:
                 message = message + "Wrong Password Entered"
 
@@ -123,6 +129,35 @@ def login(request):
 
     else:
         return render(request,'app1/login.html')
+    
+def home(request):
+    global loginFlag,loginUser
+    if request.method == 'POST':
+        print("Inside Post Method")
+        return render(request,'app1/home.html')
+    else:
+        print("INSIDE GET METHOD")
+        loginObj = str(Employee.objects.filter(emp_id=loginUser)[0]).split(";")
+        name = loginObj[1]
+        print("Name:",name)
+        dictDisp = {}
+        obj = TCP.objects.all()
+        for i in range(len(obj)):
+            val = str(obj[i]).split(";")
+            if val[1] in dictDisp:
+                dictDisp[val[1]].append(val[8])
+            else:
+                dictDisp.update({val[1] : [val[8]] })
+        print(dictDisp)
+        context = {"name":name,"dictDisp":dictDisp}
+        return render(request,'app1/home.html',context)
+
+def logout(request):
+        global loginFlag,loginUser
+        loginFlag = False
+        loginUser = ""
+        print("After Logout:",loginFlag,loginUser)
+        return redirect('login')
 
 def test(request):
     if request.method == 'POST':
@@ -139,12 +174,10 @@ def test(request):
             print("FORM:",form)
             #context = {'form':form}
             return render(request,'app1/test.html')
-    '''
+    
     else:
        
         form = it_sales_form()
     
         return render(request,'app1/test.html')
-    '''
-
 # Create your views here.

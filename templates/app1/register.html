@@ -78,6 +78,7 @@ a {
 <body>
 
 <form action="{% url 'register' %}" method="post">
+    {% csrf_token %}
       <div class="container">
     <h1>Employee Register</h1>
     <p>Please fill in this form to create an account.</p>
@@ -139,7 +140,7 @@ a {
   </div>
   
   <div class="container signin">
-    <p>Already have an account? <a href="login.html">Sign in</a>.</p>
+    <p>Already have an account? <a href="login">Sign in</a>.</p>
   </div>
 </form>
 

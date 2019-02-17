@@ -125,15 +125,18 @@ ul{
 </style>
 </head>
 <body>
-
+    <form action="{% url 'home' %}" method="POST">
+        {% csrf_token %}
+    </form>
+    
   <div id="mySidenav" class="sidenav">
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-    <a>NAME HERE</a>
-    <a href="new-company.html">Register New Company</a>
-    <a href="homepage.html">Home</a>
-    <a href="account-update.html">Account Update</a>
+    <a>{{name}}</a>
+    <a href="new-company">Register New Company</a>
+    <a href="home">Home</a>
+    <a href="account-update">Account Update</a>
     <a href="#">News</a>
-    <a href="login.html">LogOut</a>
+    <a href="{% url 'logout' %}" name="LogOut">LogOut</a>
   </div>
 
 <div id="main">
@@ -144,17 +147,21 @@ ul{
 <input type="text" id="myInput" onkeyup="searchfunction()" placeholder="Search for names.." title="Type in a name">
 
 <ul id="myUL">
-  <li><a><button class="collapsible" name="iskanaam">Company 1</button><div class="content"><ul>Product 1</ul><ul>Product 2</ul></div></a></li>
-  <li><a><button class="collapsible">Company 2</button><div class="content"><ul>Product 1</ul></div></a></li>
-  <li><a><button class="collapsible">Company 3</button><div class="content"><ul>Product 1</ul></div></a></li>
-  <li><a><button class="collapsible">Company 4</button><div class="content"><ul>Product 1</ul></div></a></li>
-  <li><a><button class="collapsible">Open Collapsible</button><div class="content"><ul>Product 1</ul></div></a></li>
-  <li><a><button class="collapsible">Open Collapsible</button><div class="content"><ul>Product 1</ul></div></a></li>
-  <li><a><button class="collapsible">Open Collapsible</button><div class="content"><ul>Product 1</ul></div></a></li>
-  <li><a><button class="collapsible">Open Collapsible</button><div class="content"><ul>Product 1</ul></div></a></li>
-  <li><a><button class="collapsible">Open Collapsible</button><div class="content"><ul>Product 1</ul></div></a></li>
+  {% for key, products in dictDisp.items %}
+  <li>
+    <a>
+      <button class="collapsible">{{ key }}</button>
+      <div class="content">
+      {% for product in products %}
+      <ul>{{ product }}</ul>
+      {% endfor %}
+    </div>
+    </a>
+  </li>
+  {% endfor %}
 </ul>
 </div>
+
 <script>
 window.onscroll = function() {myFunction1()};
 
