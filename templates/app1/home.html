@@ -125,9 +125,6 @@ ul{
 </style>
 </head>
 <body>
-    <form action="{% url 'home' %}" method="POST">
-        {% csrf_token %}
-    </form>
     
   <div id="mySidenav" class="sidenav">
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
@@ -136,7 +133,7 @@ ul{
     <a href="home">Home</a>
     <a href="account-update">Account Update</a>
     <a href="#">News</a>
-    <a href="{% url 'logout' %}" name="LogOut">LogOut</a>
+    <a href="logout" name="LogOut">LogOut</a>
   </div>
 
 <div id="main">

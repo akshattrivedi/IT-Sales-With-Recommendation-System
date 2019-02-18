@@ -6,7 +6,14 @@ import random
 pass_phrase = "7GoodLuck7"
 secret_key = generate_secret_key(pass_phrase)
 cipher = AESCipher(secret_key)
-loginUser = "A"
+loginUser = ""
+loginFlag = False
+
+ques1List = ["--","What was your childhood nickname?","In what city did you meet your spouse/significant other?","What is the name of your favorite childhood friend?",
+"What is your oldest sibling’s birthday month and year?","What is the middle name of your oldest child?"]
+
+ques2List = ["--","What school did you attend for sixth grade?","What was the name of your first stuffed animal?","In what city does your nearest sibling live?",
+"In what city or town was your first job?","Which is the first company you ever worked for?"]
 
 def index(request):
     name = "INDEX:"
@@ -132,32 +139,95 @@ def login(request):
     
 def home(request):
     global loginFlag,loginUser
-    if request.method == 'POST':
-        print("Inside Post Method")
-        return render(request,'app1/home.html')
-    else:
-        print("INSIDE GET METHOD")
-        loginObj = str(Employee.objects.filter(emp_id=loginUser)[0]).split(";")
-        name = loginObj[1]
-        print("Name:",name)
-        dictDisp = {}
-        obj = TCP.objects.all()
-        for i in range(len(obj)):
-            val = str(obj[i]).split(";")
-            if val[1] in dictDisp:
+    if loginFlag == False:
+        return redirect('login')
+
+    loginObj = str(Employee.objects.filter(emp_id=loginUser)[0]).split(";")
+    name = loginObj[1]
+    print("Name:",name)
+    dictDisp = {}
+    obj = TCP.objects.all()
+    for i in range(len(obj)):
+        val = str(obj[i]).split(";")
+        if val[1] in dictDisp :
+            if val[8] not in dictDisp[val[1]]:
                 dictDisp[val[1]].append(val[8])
-            else:
-                dictDisp.update({val[1] : [val[8]] })
-        print(dictDisp)
-        context = {"name":name,"dictDisp":dictDisp}
-        return render(request,'app1/home.html',context)
+        else:
+            dictDisp.update({val[1] : [val[8]] })
+    print(dictDisp)
+    context = {"name":name,"dictDisp":dictDisp}
+    return render(request,'app1/home.html',context)
 
 def logout(request):
-        global loginFlag,loginUser
-        loginFlag = False
-        loginUser = ""
-        print("After Logout:",loginFlag,loginUser)
+    global loginFlag,loginUser
+    loginFlag = False
+    loginUser = ""
+    print("After Logout:",loginFlag,loginUser)
+    return redirect('login')
+
+def accountUpdate(request):
+    global loginUser
+    message = ""
+    print("Login Flag:",loginFlag)
+    if loginFlag == False:
         return redirect('login')
+
+    loginObj = str(Employee.objects.filter(emp_id=loginUser)[0]).split(";")
+
+    if request.method == 'POST':
+        dept = request.POST['dept']
+        contact = request.POST['contact']
+        ans1ID = request.POST['ans1ID']
+        ans1 = request.POST['ans1']
+        ans2ID = request.POST['ans2ID']
+        ans2 = request.POST['ans2']
+        email = request.POST['email']
+        oldpass = request.POST['oldpass']
+        newpass = request.POST['newpass']
+        confnewpass = request.POST['confnewpass']
+
+        if oldpass == "" or newpass == "" or confnewpass == "":
+            Employee(emp_id=loginUser,name=loginObj[1],password=loginObj[4],dept=dept,phone=contact,
+            ques_1_id=ans1ID,ans_1=ans1,ques_2_id=ans2ID,ans_2=ans2,email=email,gender=loginObj[2]).save()
+            message = message + "Account Updated Successfully.\n"
+        else:
+            oldpassDB = cipher.decrypt(loginObj[4])
+            if oldpass == oldpassDB:
+                if newpass == confnewpass:
+                    if len(newpass)>6:
+                        flag1,flag2,flag3 = 0,0,0
+                        for i in range(len(newpass)):
+                            ele = ord(newpass[i])
+                            if ele>96 and ele<123:
+                                flag1 = 1
+                            elif ele>47 and ele<58:
+                                flag2 = 1
+                            elif ele>64 and ele<91:
+                                flag3 = 1
+                        if flag1 == 1 and flag2 == 1 and flag3 == 1:
+                            encrpytPass = cipher.encrypt(newpass)
+                            Employee(emp_id=loginUser,name=loginObj[1],password=encrpytPass,dept=dept,phone=contact,
+                            ques_1_id=ans1ID,ans_1=ans1,ques_2_id=ans2ID,ans_2=ans2,email=email,gender=loginObj[2]).save()
+                            message = message + "Account Updated Successfully.\n"
+                        else:
+                            message = message +"Re-enter The Password. Does'nt Follow Password Constraints.\n"
+                    else:
+                        message = message + "Password Length is less than 7 Characters."
+                else:
+                    message = message + "New Passwords Does Not Match."
+            else:
+                message = message + "Old Password Does Not Match."
+
+        loginObj = str(Employee.objects.filter(emp_id=loginUser)[0]).split(";")
+
+        context = {"empID":loginObj[0],"name":loginObj[1],"dept":loginObj[5],"contact":loginObj[6],"gender":loginObj[2],"ans1":loginObj[8],
+        "ans1ID":ques1List[int(loginObj[7])],"ans2":loginObj[10],"ans2ID":ques2List[int(loginObj[9])],"email":loginObj[3],"message":message}    
+        return render(request,'app1/account-update.html',context)
+    else:
+        context = {"empID":loginObj[0],"name":loginObj[1],"dept":loginObj[5],"contact":loginObj[6],"gender":loginObj[2],"ans1":loginObj[8],
+        "ans1ID":ques1List[int(loginObj[7])],"ans2":loginObj[10],"ans2ID":ques2List[int(loginObj[9])],"email":loginObj[3]}    
+        return render(request,'app1/account-update.html',context)
+
 
 def test(request):
     if request.method == 'POST':
