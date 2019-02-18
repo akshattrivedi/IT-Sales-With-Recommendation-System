@@ -8,6 +8,7 @@ secret_key = generate_secret_key(pass_phrase)
 cipher = AESCipher(secret_key)
 loginUser = ""
 loginFlag = False
+forgotEmpID = ""
 
 ques1List = ["--","What was your childhood nickname?","In what city did you meet your spouse/significant other?","What is the name of your favorite childhood friend?",
 "What is your oldest sibling’s birthday month and year?","What is the middle name of your oldest child?"]
@@ -229,6 +230,69 @@ def accountUpdate(request):
         "ans1ID":ques1List[int(loginObj[7])],"ans2":loginObj[10],"ans2ID":ques2List[int(loginObj[9])],"email":loginObj[3]}    
         return render(request,'app1/account-update.html',context)
 
+def forgotpass(request):
+    global forgotEmpID
+    if request.method == "POST":
+        forgotEmpID = request.POST['eid']
+        if len(Employee.objects.filter(emp_id=forgotEmpID)) == 0:
+            message = "No Matching Employee ID Found."
+            context = {"message":message}
+            return render(request,"app1/forgotpass.html",context)
+        
+        return redirect("forgotpass2")
+    else:
+        return render(request,"app1/forgotpass.html")
+
+def forgotpass2(request):
+    global forgotEmpID
+    message = ""
+    if forgotEmpID == "":
+        return redirect('forgotpass')
+
+    forgotLst = str(Employee.objects.filter(emp_id=forgotEmpID)[0]).split(";")
+    if request.method == "POST":
+        email = request.POST['email']
+        quesID = request.POST['quesID']
+        ans = request.POST['ans']
+        psw = request.POST['psw']
+        pswRep = request.POST['pswRep']
+
+        if email == forgotLst[3]:
+            if (quesID == "1" and ans == forgotLst[8]) or (quesID == "2" and ans == forgotLst[10]):
+                if psw == pswRep:
+                    if len(psw)>6:
+                        flag1,flag2,flag3 = 0,0,0
+                        for i in range(len(psw)):
+                            ele = ord(psw[i])
+                            if ele>96 and ele<123:
+                                flag1 = 1
+                            elif ele>47 and ele<58:
+                                flag2 = 1
+                            elif ele>64 and ele<91:
+                                flag3 = 1
+                        if flag1 == 1 and flag2 == 1 and flag3 == 1:
+                            encrpytPass = cipher.encrypt(psw)
+                            Employee(emp_id=forgotEmpID,name=forgotLst[1],password=encrpytPass,dept=forgotLst[5],phone=forgotLst[6],
+                            ques_1_id=forgotLst[7],ans_1=forgotLst[8],ques_2_id=forgotLst[9],ans_2=forgotLst[10],email=forgotLst[3],gender=forgotLst[2]).save()
+                            message =  "Password Updated Successfully."
+                        else:
+                            message = "Re-enter The Password. Does'nt Follow Password Constraints."
+                    else:
+                        message = "Password Length is less than 7 Characters."
+                else:
+                    message = "New Passwords Does Not Match."
+            else:
+                message = "Question and Answer Does Not Match."
+        else:
+            message = "Email ID Does Not Match."
+
+        context = {"message":message,"ques1":ques1List[int(forgotLst[7])],"ques2":ques2List[int(forgotLst[9])],"empID":forgotEmpID,"name":forgotLst[1]}
+        return render(request,"app1/forgotpass2.html",context)
+    else:
+        context = {"ques1":ques1List[int(forgotLst[7])],"ques2":ques2List[int(forgotLst[9])],"empID":forgotEmpID,"name":forgotLst[1]}
+        return render(request,"app1/forgotpass2.html",context)
+
+    
 
 def test(request):
     if request.method == 'POST':
@@ -252,3 +316,5 @@ def test(request):
     
         return render(request,'app1/test.html')
 # Create your views here.
+# REDIRECT = redirects to the URL.
+# RENDER = renders to the file where there is an HTML page inside a directory.

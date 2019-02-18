@@ -77,33 +77,37 @@ a {
 </head>
 <body>
 
-<form action="/action_page.php" method="post">
+<form action="{% url 'forgotpass2' %}" method="post">
+  {% csrf_token %}
   <div class="container">
-    <h1>Employee Forgot Password</h1>
+    <h2>{{ message }}</h2>
+    <center><h1>Employee Forgot Password</h1></center>
+    <center><h3>Employee ID: {{ empID }}</h3></center>
+    <center><h3>Name: {{ name }}</h3></center>
     <p>Please fill in this form to Reset the Password.</p>
     <hr>
     <label for="email"><b>Email</b></label>
     <input type="text" placeholder="Enter Email" name="email" required>
     
     <label for="ques1"><b>Security Question</b></label>
-    <select>
-      <option></option>
-      <option></option>
+    <select name="quesID">
+      <option value="1">{{ ques1 }}</option>
+      <option value="2">{{ ques2 }}</option>
     </select>
-    <input type="text" placeholder="Enter Answer" name="ques1" required>
+    <input type="text" placeholder="Enter Answer" name="ans" required>
 
     <label for="psw"><b>New Password</b></label>
     <input type="password" placeholder="Enter Password" name="psw" required>
 
     <label for="psw-repeat"><b>Repeat New Password</b></label>
-    <input type="password" placeholder="Repeat Password" name="psw-repeat" required>
+    <input type="password" placeholder="Repeat Password" name="pswRep" required>
     <hr>
 
     <button type="submit" class="forgotpass">Save Changes</button>
   </div>
   
   <div class="container signin">
-    <p>Return to Login? <a href="login.html">Click Here</a>.</p>
+    <p>Return to Login? <a href="login">Click Here</a>.</p>
   </div>
 </form>
 

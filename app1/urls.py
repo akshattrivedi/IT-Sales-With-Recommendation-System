@@ -28,8 +28,8 @@ urlpatterns = [
     path('home',views.home,name='home'),
     path('logout',views.logout,name='logout'),
     path('account-update',views.accountUpdate,name='account-update'),
-    #path('forgotpass',views.forgotpass,name='forgotpass'),
-    #path()
+    path('forgotpass',views.forgotpass,name='forgotpass'),
+    path('forgotpass2',views.forgotpass2,name='forgotpass2')
 ]
 
 urlpatterns += staticfiles_urlpatterns()

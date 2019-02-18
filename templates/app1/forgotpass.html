@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -62,21 +63,23 @@ img.avatar {
 </style>
 </head>
 <body>
-<form action="/action_page.php">
+<form action="{% url 'forgotpass' %}" method="POST">
+  {% csrf_token %}
   <center><h1><em>Forgot Password</em></h1></center>
 
   <div class="imgcontainer">
-    <img src="img_avatar2.png" alt="Avatar" class="avatar">
+    <img src="{% static 'img_avatar2.png' %}" alt="Avatar" class="avatar">
   </div>
 
   <div class="container">
     <label for="eid"><b>Employee-Id</b></label>
     <input type="text" placeholder="Employee Id" name="eid" required>
 
-    <button type="submit"><a href="forgotpass2.html"> Next ></a></button>
+    <button type="submit"> Next</button>
+    <h2>{{ message }}</h2>
   </div>
 <div class="container">
-    <p>Return to Login Page? <a href="login.html">Click Here</a>.</p>
+    <p>Return to Login Page? <a href="login">Click Here</a>.</p>
   </div>
 </form>
 
