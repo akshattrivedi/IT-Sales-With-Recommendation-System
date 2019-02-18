@@ -1,3 +1,5 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -62,7 +64,7 @@ img.avatar {
   <center><h1><em>Employee Login Form</em></h1></center>
 
   <div class="imgcontainer">
-    <img src="./img_avatar2.png" alt="Avatar" class="avatar">
+    <img src='{% static "./img_avatar2.png" %}' alt="Avatar" class="avatar">
   </div>
 
   <div class="container">

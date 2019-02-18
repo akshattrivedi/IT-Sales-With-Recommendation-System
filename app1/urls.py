@@ -27,4 +27,6 @@ urlpatterns = [
     path('home',views.home,name='home'),
     path('logout',views.logout,name='logout'),
     path('account-update',views.accountUpdate,name='account-update'),
+    #path('forgotpass',views.forgotpass,name='forgotpass'),
+    #path()
 ]
