@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" id="blah">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Add Product</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="mySidenav" class="sidenav">
+      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+      <a href="#">Home</a>
+      <a href="#">Register Company</a>
+      <a href="#">Accounts</a>
+      <a href="#">News</a>
+      <a href="#">LogOut</a>
+    </div>
+  
+  <div id="main">
+  <div class="header" id="myHeader">
+    <h2><center><span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span>  TechCiti Home</center></h2>
+  </div>
+  
+  <div class="content">
+  
+    <form action="/action_page.php" method="post">
+    <div class="container">
+      <h1> Add Product</h1>
+      <p>Please fill in this form to add a product to database.</p>
+      <hr>
+      <label for="pid"><b>Product Id</b></label>
+      <input type="text" placeholder="Enter Product Id" name="pid" required>
+      <hr>
+      <label for="pname"><b>Product Name</b></label>
+      <input type="text" placeholder="Product Name" name="pname" required>
+      <hr>
+      <label for="cprice"><b>Product price</b></label>
+      <input type="number" placeholder="Enter Product price" name="cprice" required>
+      <hr>
+  
+      <button type="submit" class="registerbtn" style="padding: 10px 40px 10px 40px;font-weight: bold;">Register</button>
+    </div>
+  </form>
+    
+  </div>
+  
+  </div>
+  
+    <script>
+
+
+        function openNav() {
+          document.getElementById("mySidenav").style.width = "250px";
+          document.getElementById("main").style.marginLeft = "250px";
+        }
+        
+        function closeNav() {
+          document.getElementById("mySidenav").style.width = "0";
+          document.getElementById("main").style.marginLeft = "0";
+        }
+        
+        </script>
+        
+
+</body>
+</html>
