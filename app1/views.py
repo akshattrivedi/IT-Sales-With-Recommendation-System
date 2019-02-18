@@ -75,9 +75,9 @@ def register(request):
                 if flag1 == 1 and flag2 == 1 and flag3 == 1:
                     count = count + 1
                 else:
-                    message = message +"Re-enter the Password\n"
+                    message = message +"Re-enter the Password.\n"
         else:
-            message = message + "Passwords does not match\n"
+            message = message + "Passwords does not match.\n"
         
         print(count)
         if count == 2:
@@ -224,6 +224,7 @@ def accountUpdate(request):
         "ans1ID":ques1List[int(loginObj[7])],"ans2":loginObj[10],"ans2ID":ques2List[int(loginObj[9])],"email":loginObj[3],"message":message}    
         return render(request,'app1/account-update.html',context)
     else:
+        # GET METHOD
         context = {"empID":loginObj[0],"name":loginObj[1],"dept":loginObj[5],"contact":loginObj[6],"gender":loginObj[2],"ans1":loginObj[8],
         "ans1ID":ques1List[int(loginObj[7])],"ans2":loginObj[10],"ans2ID":ques2List[int(loginObj[9])],"email":loginObj[3]}    
         return render(request,'app1/account-update.html',context)

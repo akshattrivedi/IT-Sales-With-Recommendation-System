@@ -81,6 +81,7 @@ a {
     {% csrf_token %}
       <div class="container">
     <h1>Employee Register</h1>
+    <h2>{{ message }}</h2>
     <p>Please fill in this form to create an account.</p>
     <hr>
     <label for="emp_id"><b>Employee Id</b></label>
@@ -133,10 +134,7 @@ a {
     <p>By creating an account you agree to our <a href="#">Terms & Privacy</a>.</p>
 
     <button type="submit" class="registerbtn">Register</button>
-    {{message}}
-    <script>
-      alert( "{{ message }} ");
-    </script>
+    
   </div>
   
   <div class="container signin">
