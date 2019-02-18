@@ -17,6 +17,7 @@ Including another URLconf
 
 from django.urls import path
 from app1 import views
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 urlpatterns = [
     path('',views.index,name='index'),
@@ -30,3 +31,5 @@ urlpatterns = [
     #path('forgotpass',views.forgotpass,name='forgotpass'),
     #path()
 ]
+
+urlpatterns += staticfiles_urlpatterns()

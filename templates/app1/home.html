@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,7 +18,7 @@
 }
 
 #myInput {
-  background-image: url('searchicon.png');
+  background-image: url('{% static "searchicon.png" %}');
   background-position: 10px 12px;
   background-size: 20px 20px;
   background-repeat: no-repeat;
