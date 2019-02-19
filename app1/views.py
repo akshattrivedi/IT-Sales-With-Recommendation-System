@@ -292,7 +292,26 @@ def forgotpass2(request):
         context = {"ques1":ques1List[int(forgotLst[7])],"ques2":ques2List[int(forgotLst[9])],"empID":forgotEmpID,"name":forgotLst[1]}
         return render(request,"app1/forgotpass2.html",context)
 
-    
+def addProduct(request):
+    global loginFlag
+    message = ""
+    if loginFlag == False:
+        return redirect('login')
+
+    if request.method == "POST":
+        pid = request.POST['pid']
+        pname = request.POST['pname']
+        pprize = request.POST['cprice']
+        if len(Products.objects.filter(pId=pid)) == 0:
+            Products(pId=pid,pName=pname,pPrize=pprize).save()
+            message = "Added Product Successfully."
+        else:
+            message = "Product with this product ID already exists."
+
+        context = {'message':message}
+        return render(request,'app1/addproduct.html',context)
+    else:
+        return render(request,'app1/addproduct.html')
 
 def test(request):
     if request.method == 'POST':

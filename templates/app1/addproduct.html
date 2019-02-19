@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en" id="blah">
 <head>
@@ -5,17 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Add Product</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
 
     <div id="mySidenav" class="sidenav">
       <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-      <a href="#">Home</a>
+      <a href="home">Home</a>
       <a href="#">Register Company</a>
-      <a href="#">Accounts</a>
+      <a href="account-update">Account Update</a>
+      <a href="addProduct">Add Product</a>
       <a href="#">News</a>
-      <a href="#">LogOut</a>
+      <a href="logout">LogOut</a>
     </div>
   
   <div id="main">
@@ -25,7 +27,8 @@
   
   <div class="content">
   
-    <form action="/action_page.php" method="post">
+    <form action="{% url 'addProduct' %}" method="post">
+      {% csrf_token %}
     <div class="container">
       <h1> Add Product</h1>
       <p>Please fill in this form to add a product to database.</p>
@@ -41,6 +44,7 @@
       <hr>
   
       <button type="submit" class="registerbtn" style="padding: 10px 40px 10px 40px;font-weight: bold;">Register</button>
+      <h3>{{ message }}</h3>
     </div>
   </form>
     
