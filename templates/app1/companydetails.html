@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="companydetails.css">
+</head>
+<body>
+        <div class="header">
+            <a href="#default" class="logo">TechCiti</a>
+            <div class="header-right">
+            <a class="active" href="#home">Home</a>
+            <a href="#contact">Contact</a>
+            <a href="#about">About</a>
+            </div>
+        </div>
+
+
+<main>
+<div class="row">
+  <div class="left" style="background-color:#bbb;">
+    <h2>Menu</h2>
+    <input type="text" id="mySearch" onkeyup="myFunction()" placeholder="Search.." title="Type in a company">
+    
+    <ul id="myMenu">
+            
+            <div class="tab">
+                <li class="tablinks" onmouseover="opencompany(event, 'google')"><a>google</a></li>
+                <li class="tablinks" onmouseover="opencompany(event, 'wipro')"><a>wipro</a></li>
+                <li class="tablinks" onmouseover="opencompany(event, 'someother')"><a>someother</a></li>
+            </div>
+    </ul>
+  </div>
+      
+
+  <div class="right" style="background-color:#ddd;">
+    <h2>Page Content</h2>
+    <div id="google" class="tabcontent">
+            <h3>Google</h3>
+            <p>company details</p>
+          </div>
+          
+          <div id="wipro" class="tabcontent">
+            <h3>Paris</h3>
+            <p>Paris is the capital of France.</p> 
+          </div>
+          
+          <div id="someother" class="tabcontent">
+            <h3>Tokyo</h3>
+            <p>Tokyo is the capital of Japan.</p>
+
+  </div>
+  <div class="clearfix"></div>
+</div>
+</main>
+
+
+<script>
+    
+function myFunction() {
+  var input, filter, ul, li, a, i;
+  input = document.getElementById("mySearch");
+  filter = input.value.toUpperCase();
+  ul = document.getElementById("myMenu");
+  li = ul.getElementsByTagName("li");
+  for (i = 0; i < li.length; i++) {
+    a = li[i].getElementsByTagName("a")[0];
+    if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
+      li[i].style.display = "";
+    } else {
+      li[i].style.display = "none";
+    }
+  }
+}
+
+
+function openNav() {
+    document.getElementById("mySidenav").style.width = "250px";
+    document.getElementById("main").style.marginLeft = "250px";
+  }
+  function closeNav() {
+    document.getElementById("mySidenav").style.width = "0";
+    document.getElementById("main").style.marginLeft = "0";
+  }
+
+
+function opencompany(evt, companyname) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+      tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(companyname).style.display = "block";
+    evt.currentTarget.className += " active";
+  }
+</script>
+
+</body>
+</html>
