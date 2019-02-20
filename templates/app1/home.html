@@ -4,9 +4,14 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
-* {
-  box-sizing: border-box;
+  body{
 
+    background: url(https://source.unsplash.com/random?mountain) no-repeat center center;
+    background-size: cover;
+    background-attachment: fixed;
+}
+main{
+  margin: 0 15%;
 }
 .header {
 
@@ -138,10 +143,10 @@ ul{
     <a href="logout" name="LogOut">LogOut</a>
   </div>
 
-<div id="main">
 <div class="header" id="myHeader">
   <h2><center><span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span>  TechCiti Home</center></h2>
 </div>
+<main>
 <h2 style="margin-top: 90px"><center> Search For a Company</center></h2>
 <input type="text" id="myInput" onkeyup="searchfunction()" placeholder="Search for names.." title="Type in a name">
 
@@ -159,8 +164,7 @@ ul{
   </li>
   {% endfor %}
 </ul>
-</div>
-
+  </main>
 <script>
 window.onscroll = function() {myFunction1()};
 
