@@ -5,9 +5,13 @@
   <title>Forgot Password</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
-html,body{
-  height: 100%;
-  background: repeating-linear-gradient(#4CAF50,#141517);
+body{
+    background: url(https://source.unsplash.com/random?mountain) no-repeat center center;
+    background-size: cover;
+    background-attachment: fixed;
+}
+main{
+  margin: 0 15%;
 }
 form {
       border: 3px solid #f1f1f1;
@@ -63,6 +67,7 @@ img.avatar {
 </style>
 </head>
 <body>
+<main>
 <form action="{% url 'forgotpass' %}" method="POST">
   {% csrf_token %}
   <center><h1><em>Forgot Password</em></h1></center>
@@ -82,6 +87,6 @@ img.avatar {
     <p>Return to Login Page? <a href="login">Click Here</a>.</p>
   </div>
 </form>
-
+</main>
 </body>
 </html>
