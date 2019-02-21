@@ -6,8 +6,16 @@
 <style>
 body {
   font-family: Arial, Helvetica, sans-serif;
-  background-image: linear-gradient(#4CAF50, #141517);
+  background: url("https://source.unsplash.com/random?mountain");
+  background-attachment: fixed;
+  background-size : cover;
 }
+
+main{
+  margin : 0 5%;
+  transition: 0.5ms;
+}
+
 form {border: 3px solid #f1f1f1;
       margin: 50px;
       margin-left: 100px;
@@ -16,9 +24,6 @@ form {border: 3px solid #f1f1f1;
       padding: 80px;
     }
 
-* {
-  box-sizing: border-box;
-}
 
 /* Add padding to containers */
 .container {
@@ -76,7 +81,7 @@ a {
 </style>
 </head>
 <body>
-
+<main>
 <form action="{% url 'register' %}" method="post">
     {% csrf_token %}
       <div class="container">
@@ -141,6 +146,6 @@ a {
     <p>Already have an account? <a href="login">Sign in</a>.</p>
   </div>
 </form>
-
+</main>
 </body>
 </html>

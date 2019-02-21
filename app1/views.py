@@ -313,6 +313,54 @@ def addProduct(request):
     else:
         return render(request,'app1/addproduct.html')
 
+def companyRegister(request):
+    global loginFlag
+    message = ""
+    color = "red"
+    if loginFlag == False:
+        return redirect('login')
+    
+    if request.method == 'POST':
+        cid = request.POST['cid']
+        cname = request.POST['cname']
+        cpass = request.POST['cpass']
+        creppass = request.POST['creppass']
+        cemail = request.POST['cemail']
+        ctype = request.POST['ctype']
+        csize = request.POST['csize']
+        cloc = request.POST['cloc']
+
+        if len(Company.objects.filter(cId=cid)) == 0:
+            if cpass == creppass:
+                if len(cpass)>6:
+                    flag1,flag2,flag3 = 0,0,0
+                    for i in range(len(cpass)):
+                        ele = ord(cpass[i])
+                        if ele>96 and ele<123:
+                            flag1 = 1
+                        elif ele>47 and ele<58:
+                            flag2 = 1
+                        elif ele>64 and ele<91:
+                            flag3 = 1
+                    if flag1 == 1 and flag2 == 1 and flag3 == 1:
+                        encrpytPass = cipher.encrypt(cpass)
+                        Company(cId=cid,cName=cname,cPass=encrpytPass,cEmail=cemail,cType=ctype,cSize=csize,cLoc=cloc).save()
+                        message = "Account Registered Successfully."
+                        color = "green"
+                    else:
+                        message = "Re-enter the Password. Does not follow Password Constraints."
+                else:
+                    message = "Password Length must be greater than 6 characters."
+            else:
+                message = "Passwords Do Not Match."
+        else:
+            message = "Company ID Already Exists."
+
+        context = {"message":message,"color":color}
+        return render(request,'app1/companyregister.html',context)
+    else:
+        return render(request,'app1/companyregister.html')
+
 def test(request):
     if request.method == 'POST':
         form = it_sales_form(request.POST)
