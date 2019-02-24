@@ -1,8 +1,9 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="companydetails.css">
+<link rel="stylesheet" href="{% static 'css/companydetails.css' %}">
 </head>
 <body>
         <div class="header">
@@ -14,7 +15,6 @@
             </div>
         </div>
 
-
 <main>
 <div class="row">
   <div class="left" style="background-color:#bbb;">
@@ -24,35 +24,32 @@
     <ul id="myMenu">
             
             <div class="tab">
-                <li class="tablinks" onmouseover="opencompany(event, 'google')"><a>google</a></li>
-                <li class="tablinks" onmouseover="opencompany(event, 'wipro')"><a>wipro</a></li>
-                <li class="tablinks" onmouseover="opencompany(event, 'someother')"><a>someother</a></li>
+            {% for set in finalLst %}
+                <li class="tablinks" onmouseover="opencompany(event, '{{ set.1 }}')"><a>{{ set.1 }}</a></li>
+            {% endfor %}
+
             </div>
     </ul>
   </div>
-      
 
+
+  
   <div class="right" style="background-color:#ddd;">
     <h2>Page Content</h2>
-    <div id="google" class="tabcontent">
-            <h3>Google</h3>
-            <p>company details</p>
+    {% for set in finalLst %}
+    <div id="{{ set.1 }}" class="tabcontent">
+            <h3>{{ set.1 }}</h3>
+            <p>{{ set.0 }}</p>
+            <p>{{ set.1 }}</p>
+            <p>{{ set.3 }}</p>
+            <p>{{ set.4 }}</p>
+            <p>{{ set.5 }}</p>
+            <p>{{ set.6 }}</p>
           </div>
-          
-          <div id="wipro" class="tabcontent">
-            <h3>Paris</h3>
-            <p>Paris is the capital of France.</p> 
-          </div>
-          
-          <div id="someother" class="tabcontent">
-            <h3>Tokyo</h3>
-            <p>Tokyo is the capital of Japan.</p>
-
-  </div>
+    {% endfor %}      
   <div class="clearfix"></div>
 </div>
 </main>
-
 
 <script>
     

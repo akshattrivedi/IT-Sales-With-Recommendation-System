@@ -32,6 +32,7 @@ urlpatterns = [
     path('forgotpass2',views.forgotpass2,name='forgotpass2'),
     path('addProduct',views.addProduct,name='addProduct'),
     path('companyRegister',views.companyRegister,name='companyRegister'),
+    path('companyDetails',views.companyDetails,name='companyDetails'),
 ]
 
 urlpatterns += staticfiles_urlpatterns()

@@ -361,6 +361,20 @@ def companyRegister(request):
     else:
         return render(request,'app1/companyregister.html')
 
+def companyDetails(request):
+    # ONLY GET METHOD
+    global loginFlag
+
+    if loginFlag == False:
+        return redirect('login')
+
+    finalLst = []
+    for i in range(len(Company.objects.all())):
+        finalLst.append(str(Company.objects.all()[i]).split(";"))
+    
+    context = {"finalLst":finalLst}
+    return render(request,'app1/companydetails.html',context)
+
 def test(request):
     if request.method == 'POST':
         form = it_sales_form(request.POST)
