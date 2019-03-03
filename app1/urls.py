@@ -33,6 +33,7 @@ urlpatterns = [
     path('addProduct',views.addProduct,name='addProduct'),
     path('companyRegister',views.companyRegister,name='companyRegister'),
     path('companyDetails',views.companyDetails,name='companyDetails'),
+    path('transactions',views.transactions,name='transactions'),
 ]
 
 urlpatterns += staticfiles_urlpatterns()

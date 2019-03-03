@@ -375,6 +375,29 @@ def companyDetails(request):
     context = {"finalLst":finalLst}
     return render(request,'app1/companydetails.html',context)
 
+def transactions(request):
+    global loginFlag
+    transDic = {}
+    transLst = []
+    
+    if loginFlag == False:
+        return redirect('login')
+
+    for i in range(len(Company.objects.all())):
+        cId = str(Company.objects.all()[i]).split(";")[0]
+        transObj = Company.objects.get(cId=cId).tcp_set.all().distinct('tId')
+
+        if len(transObj) !=0:
+            for j in range(len(transObj)):
+                transLst.append(str(transObj[j]).split(";"))
+            transDic.update({cId:transLst})
+            transLst = []
+
+    context = {"transDic":transDic}
+    return render(request,'app1/transactions.html',context)
+
+    
+
 def test(request):
     if request.method == 'POST':
         form = it_sales_form(request.POST)

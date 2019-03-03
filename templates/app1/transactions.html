@@ -3,7 +3,7 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="{% static 'css/companydetails.css' %}">
+<link rel="stylesheet" href="{% static 'css/transactions.css' %}">
 </head>
 <body>
         <div class="header">
@@ -24,8 +24,11 @@
     <ul id="myMenu">
             
             <div class="tab">
-            {% for set in finalLst %}
-                <li class="tablinks" onmouseover="opencompany(event, '{{ set.0 }}')"><a>{{ set.1 }}</a></li>
+            {% for key,values in transDic.items %}
+                <li class="tablinks" onmouseover="opencompany(event, '{{ key }}')">
+                {% for value in values|slice:":1" %}
+                  <a>{{ value.1 }}</a></li>
+                {% endfor %}
             {% endfor %}
 
             </div>
@@ -35,18 +38,23 @@
 
   
   <div class="right" style="background-color:#ddd;">
-    <h2>Page Content</h2>
-    {% for set in finalLst %}
-    <div id="{{ set.0 }}" class="tabcontent">
+    <h2>TRANSACTIONS</h2>
+    {% for key,values in transDic.items %}
+    <div id="{{ key }}" class="tabcontent">
             <div class="dtls">
-            <h3>{{ set.1 }}</h3>
-            <p>{{ set.0 }}</p>
-            <p>{{ set.1 }}</p>
-            <p>{{ set.3 }}</p>
-            <p>{{ set.4 }}</p>
-            <p>{{ set.5 }}</p>
-            <p>{{ set.6 }}</p>
-            </div>
+            {% for value in values|slice:":1" %}
+            <h3>{{ value.1 }}</h3>
+            {% endfor %}
+            <table style="width:100%">  
+            {% for value in values %}
+            <tr>
+              <td>{{ value.10 }}</td>
+              <td>{{ value.11 }}</td>
+              <td>{{ value.12 }}</td>
+            </tr>
+            {% endfor %}
+            </table>
+        </div>
       </div>
     {% endfor %}      
   <div class="clearfix"></div>
