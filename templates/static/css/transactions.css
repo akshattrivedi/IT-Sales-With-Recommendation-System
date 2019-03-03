@@ -9,13 +9,23 @@ body {
       transition: 0.5ms;
       
   }
+  th,td{
+    border: 1px solid black;
+    text-align: center;
+    border-collapse: collapse;
+    padding: 5px 15px;
+  }
+  table{
+    border-collapse: collapse;
+  }
+
 
   /* Style the tab content */
   .tabcontent {
     float: left;
     padding: 0px 12px;
     border: 1px solid #ccc;
-    width: 70%;
+    width: 95%;
     border-left: none;
     height: 300px;
     display: none;
