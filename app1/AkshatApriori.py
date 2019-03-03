@@ -2,7 +2,7 @@ import pandas as pd
 from apyori import apriori
 
 def run(cName,cType):
-    store_data = pd.read_csv('AkshatComputerWithCompany.csv',header=None)
+    store_data = pd.read_csv('app1/AkshatComputerWithCompany.csv',header=None)
     maxlen=len(store_data.index)
     print(store_data.head())
     records=[]

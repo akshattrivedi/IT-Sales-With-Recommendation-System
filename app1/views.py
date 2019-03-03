@@ -3,12 +3,16 @@ from app1.forms import it_sales_form
 from app1.models import Employee,Company,Products,Transactions,TCP,Temp
 from simple_aes_cipher import AESCipher, generate_secret_key
 import random
+from app1 import AkshatApriori
+
 pass_phrase = "7GoodLuck7"
 secret_key = generate_secret_key(pass_phrase)
 cipher = AESCipher(secret_key)
 loginUser = ""
 loginFlag = False
 forgotEmpID = ""
+tprodCount = -1
+tcount = -1
 
 ques1List = ["--","What was your childhood nickname?","In what city did you meet your spouse/significant other?","What is the name of your favorite childhood friend?",
 "What is your oldest sibling’s birthday month and year?","What is the middle name of your oldest child?"]
@@ -376,10 +380,11 @@ def companyDetails(request):
     return render(request,'app1/companydetails.html',context)
 
 def transactions(request):
-    global loginFlag
+    global loginFlag,tprodCount,tcount,countFlag,ans
     transDic = {}
     transLst = []
     prodLst = []
+    ans = ""
     
     if loginFlag == False:
         return redirect('login')
@@ -390,7 +395,6 @@ def transactions(request):
 
         if len(transObj) !=0:
             for j in range(len(transObj)):
-                #transLst.append(str(transObj[j]).split(";"))
                 tId = str(transObj[j]).split(";")[10]
                 prodObj = Company.objects.get(cId=cId).tcp_set.filter(tId=tId)
                 for k in range(len(prodObj)):
@@ -400,10 +404,47 @@ def transactions(request):
 
             transDic.update({cId:transLst})
             transLst = []
+
+    #print(transDic)
+
+    if request.method == "POST":
+        countFlag = countFlag + 1
+        cName = request.POST['cName']
+        cType = request.POST['cType']
+        print("COUNT:",tcount)
+        if int(tcount) < 0:
+            tprodCount = request.POST['tprodCount']
+            tcount = tprodCount
+
+        print("POST",cName,cType,tprodCount)
+
+        prodSet = []
+        prodSetObj = Products.objects.order_by("pName")
+        for i in range(len(prodSetObj)):
+            prodSet.append(str(prodSetObj[i]).split(";")[1])
+
+        recInpLst = []
+        ele = ""
+        if int(tcount)> 0 and countFlag>1:
+            for i in range(int(tcount)-1):
+                ele = "pList_"+str(i)
+                recInpLst.append(request.POST[ele])
+            print(recInpLst)
+            aprioriDict = AkshatApriori.run(cName,cType)
+            print(aprioriDict)
+            ans = aprioriDict.get(str(recInpLst))
+            if ans == None:
+                ans = "No Product Recommendation"
+            print("ANS:",ans)
+
+        context = {"transDic":transDic,'tprodCount':range(int(tprodCount)-1),'tcount':int(tcount),'cName':cName,'cType':cType,
+                    'prodSet':prodSet,"ans":ans}
+        return render(request,'app1/transactions.html',context)
     
-    print(transDic)
-    context = {"transDic":transDic}
-    return render(request,'app1/transactions.html',context)
+    else:
+        countFlag = 0
+        context = {"transDic":transDic,'tprodCount':range(int(tprodCount)-1),'tcount':int(tcount)}
+        return render(request,'app1/transactions.html',context)
 
     
 
