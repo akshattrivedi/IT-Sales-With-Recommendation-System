@@ -27,7 +27,9 @@
             {% for key,values in transDic.items %}
                 <li class="tablinks" onmouseover="opencompany(event, '{{ key }}')">
                 {% for value in values|slice:":1" %}
-                  <a>{{ value.1 }}</a></li>
+                  {% for ele in value|slice:":1" %}
+                  <a>{{ ele.1 }}</a></li>
+                  {% endfor %}
                 {% endfor %}
             {% endfor %}
 
@@ -43,14 +45,19 @@
     <div id="{{ key }}" class="tabcontent">
             <div class="dtls">
             {% for value in values|slice:":1" %}
-            <h3>{{ value.1 }}</h3>
+              {% for ele in value|slice:":1" %}
+              <h3>{{ ele.1 }}</h3>
+              {% endfor %}  
             {% endfor %}
             <table style="width:100%">  
             {% for value in values %}
+            {% for ele in value|slice:":1" %}
             <tr>
-              <td>{{ value.10 }}</td>
-              <td>{{ value.11 }}</td>
-              <td>{{ value.12 }}</td>
+              <td>{{ ele.10 }}</td>
+              <td>{{ ele.11 }}</td>
+              <td>{{ ele.12 }}</td>
+              {% endfor %}
+              <td>{{ value.1 }}</td>
             </tr>
             {% endfor %}
             </table>

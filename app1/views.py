@@ -379,6 +379,7 @@ def transactions(request):
     global loginFlag
     transDic = {}
     transLst = []
+    prodLst = []
     
     if loginFlag == False:
         return redirect('login')
@@ -389,10 +390,18 @@ def transactions(request):
 
         if len(transObj) !=0:
             for j in range(len(transObj)):
-                transLst.append(str(transObj[j]).split(";"))
+                #transLst.append(str(transObj[j]).split(";"))
+                tId = str(transObj[j]).split(";")[10]
+                prodObj = Company.objects.get(cId=cId).tcp_set.filter(tId=tId)
+                for k in range(len(prodObj)):
+                    prodLst.append(str(prodObj[k]).split(";")[8])
+                transLst.append([str(transObj[j]).split(";"),prodLst])
+                prodLst = []
+
             transDic.update({cId:transLst})
             transLst = []
-
+    
+    print(transDic)
     context = {"transDic":transDic}
     return render(request,'app1/transactions.html',context)
 
