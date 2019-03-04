@@ -141,12 +141,13 @@ def login(request):
         return render(request,'app1/login.html')
     
 def home(request):
-    global loginFlag,loginUser
+    global loginFlag,loginUser,loginName
     if loginFlag == False:
         return redirect('login')
 
     loginObj = str(Employee.objects.filter(emp_id=loginUser)[0]).split(";")
     name = loginObj[1]
+    loginName = name
     print("Name:",name)
     dictDisp = {}
     obj = TCP.objects.all()
@@ -169,7 +170,7 @@ def logout(request):
     return redirect('login')
 
 def accountUpdate(request):
-    global loginUser
+    global loginUser,loginName
     message = ""
     print("Login Flag:",loginFlag)
     if loginFlag == False:
@@ -295,7 +296,7 @@ def forgotpass2(request):
         return render(request,"app1/forgotpass2.html",context)
 
 def addProduct(request):
-    global loginFlag
+    global loginFlag,loginName
     message = ""
     if loginFlag == False:
         return redirect('login')
@@ -310,10 +311,11 @@ def addProduct(request):
         else:
             message = "Product with this product ID already exists."
 
-        context = {'message':message}
+        context = {'message':message,'name':loginName}
         return render(request,'app1/addproduct.html',context)
     else:
-        return render(request,'app1/addproduct.html')
+        context = {'name':loginName}
+        return render(request,'app1/addproduct.html',context)
 
 def companyRegister(request):
     global loginFlag
@@ -358,10 +360,11 @@ def companyRegister(request):
         else:
             message = "Company ID Already Exists."
 
-        context = {"message":message,"color":color}
+        context = {"message":message,"color":color,'name':loginName}
         return render(request,'app1/companyregister.html',context)
     else:
-        return render(request,'app1/companyregister.html')
+        context = {'name':loginName}
+        return render(request,'app1/companyregister.html',context)
 
 def companyDetails(request):
     # ONLY GET METHOD
@@ -374,7 +377,7 @@ def companyDetails(request):
     for i in range(len(Company.objects.all())):
         finalLst.append(str(Company.objects.all()[i]).split(";"))
     
-    context = {"finalLst":finalLst}
+    context = {"finalLst":finalLst,'name':loginName}
     return render(request,'app1/companydetails.html',context)
 
 def transactions(request):
@@ -436,14 +439,14 @@ def transactions(request):
             print("ANS:",ans)
 
         context = {"transDic":transDic,'tprodCount':range(int(tprodCount)-1),'tcount':int(tcount),'cName':cName,'cType':cType,
-                    'prodSet':prodSet,"ans":ans}
+                    'prodSet':prodSet,"ans":ans,'name':loginName}
         return render(request,'app1/transactions.html',context)
     
     else:
         countFlag = 0
         tprodCount = -1
         tcount = -1
-        context = {"transDic":transDic,'tprodCount':range(int(tprodCount)-1),'tcount':int(tcount)}
+        context = {"transDic":transDic,'tprodCount':range(int(tprodCount)-1),'tcount':int(tcount),'name':loginName}
         return render(request,'app1/transactions.html',context)
 
     

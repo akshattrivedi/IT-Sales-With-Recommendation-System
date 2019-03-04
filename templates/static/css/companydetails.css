@@ -10,6 +10,10 @@ body {
       
   }
 
+  table,td{
+    padding: 5px;
+  }
+
   /* Style the tab content */
   .tabcontent {
     float: left;

@@ -1159,13 +1159,15 @@ function zf_FocusNext(elem,event) {
 	</head><body class="zf-backgroundBg"><!-- Change or deletion of the name attributes in the input tag will lead to empty values on record submission-->
 		<div id="mySidenav" class="sidenav">
 			<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-			<a id="PersonName">{{ name }}</a>
-			<a href="#">Register New Company</a>
-			<a href="home">Home</a>
-			<a href="account-update">Account Update</a>
-	        <a href="addProduct">Add Product</a>
-			<a href="#">News</a>
-			<a href="login">LogOut</a>
+			<a><b>{{name}}</b></a>
+    		<a href="home">Home</a>
+    		<a href="account-update">Account Update</a>
+    		<a href="companyRegister">Register Company</a>
+    		<a href="companyDetails">Company Details</a>
+    		<a href="transactions">Transactions</a>
+    		<a href="addProduct">Add Product</a>
+    		<a href="#">News</a>
+    		<a href="logout" name="LogOut">LogOut</a>
 		</div>
 
 		<div class="header" id="myHeader">
