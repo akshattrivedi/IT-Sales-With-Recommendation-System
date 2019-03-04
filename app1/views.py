@@ -11,8 +11,6 @@ cipher = AESCipher(secret_key)
 loginUser = ""
 loginFlag = False
 forgotEmpID = ""
-tprodCount = -1
-tcount = -1
 
 ques1List = ["--","What was your childhood nickname?","In what city did you meet your spouse/significant other?","What is the name of your favorite childhood friend?",
 "What is your oldest sibling’s birthday month and year?","What is the middle name of your oldest child?"]
@@ -443,6 +441,8 @@ def transactions(request):
     
     else:
         countFlag = 0
+        tprodCount = -1
+        tcount = -1
         context = {"transDic":transDic,'tprodCount':range(int(tprodCount)-1),'tcount':int(tcount)}
         return render(request,'app1/transactions.html',context)
 
