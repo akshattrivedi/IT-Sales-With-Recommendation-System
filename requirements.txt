@@ -1,4 +1,3 @@
-absl-py==0.7.0
 appdirs==1.4.3
 application-utility==1.1.0.dev1
 apyori==1.1.1
