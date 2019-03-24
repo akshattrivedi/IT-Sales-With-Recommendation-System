@@ -1,0 +1,92 @@
+* {
+    box-sizing: border-box;
+  
+  }
+  html#blah{
+    height: 100%;
+  }
+  body{
+    background: url(https://source.unsplash.com/random?mountain) no-repeat center center;
+    background-size: cover;
+    background-attachment: fixed;
+}
+  
+  .header {
+  
+    background: #555;
+    color: #f1f1f1;
+    position: fixed;
+    top: 0;
+    width: 100%;
+  }
+  
+  #main {
+    transition: margin-left .5s;
+    margin: 0 15%;
+   
+  }
+  
+  .sidenav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #555;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+  }
+  
+  .sidenav a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #f1f1f1;
+    display: block;
+    transition: 0.3s;
+  }
+  
+  .sidenav a:hover {
+    color: #818181;
+  }
+  
+  .sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+  }
+  .content{
+    display: block;
+    margin: 100px 200px 20px 200px;
+    background: linear-gradient(#fff, #BCBCBC);
+    border: 2px solid black;
+  }
+  
+  @media screen and (max-height: 450px) {
+    .sidenav {padding-top: 15px;}
+    .sidenav a {font-size: 18px;}
+  }
+  
+  .container {
+    padding: 16px;
+    
+  }
+  
+  /* Full-width input fields */
+  input[type=text], input[type=password],input[type=number],select {
+    width: 50%;
+    padding: 15px;
+    margin: 5px 0 22px 0;
+    display: block;
+    border: none;
+    background: #f1f1f1;
+  }
+  
+  input[type=text]:focus, input[type=password]:focus,input[type=number]:focus {
+    background-color: #ddd;
+    outline: none;
+  }
