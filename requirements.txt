@@ -2,3 +2,4 @@ Simple_AES_Cipher==1.0.7
 pandas==0.23.4
 apyori==1.1.1
 Django==2.1.5
+psycopg2==2.7.7
