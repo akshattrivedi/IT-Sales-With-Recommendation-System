@@ -1,2 +1,1 @@
-heroku ps:scale web=1
-python3 manage.py runserver 127.0.0.1:$PORT
+web: python manage.py runserver 0.0.0.0:$PORT
