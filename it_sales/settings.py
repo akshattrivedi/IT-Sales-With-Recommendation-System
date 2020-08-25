@@ -77,11 +77,11 @@ WSGI_APPLICATION = 'it_sales.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'sales',
-        'USER': 'postgres',
-        'PASSWORD': 'goodluck',
-        'HOST': '127.0.0.1',
-        'PORT': '5000',
+        'NAME': 'd5k3gqhu9h7l5c',
+        'USER': 'tjwgngtjhrjzff',
+        'PASSWORD': 'd0a2eaadea5c107be3504af905266bb633894fc0ff3a9e397739cb4bcf484d1d',
+        'HOST': 'ec2-34-238-26-109.compute-1.amazonaws.com',
+        'PORT': '5432',
     }
 }
 
